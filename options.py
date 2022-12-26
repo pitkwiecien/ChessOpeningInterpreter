@@ -1,3 +1,6 @@
+#name
+program_name = "The Chesser"
+
 # characters
 comment_character = "/"
 import_character = "@"

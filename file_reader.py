@@ -3,10 +3,19 @@ import options, auxiliary_functions
 
 def get_data(opening_str):
     opening_list = opening_str.split(" ")
+    if opening_str == "":
+        opening_list = []
 
     white = len(opening_list) % 2 == 0
     current_file = f"for{'White' if white else 'Black'}"
     filename = f"{options.openings_path}/{current_file}.txt"
+
+    if opening_str == "":
+        with open(filename, "r") as file:
+            line = file.readline()
+            formatted_line = format_line(line, opening_list, True)
+            return formatted_line[:-1]
+
     with open(filename, "r") as file:
         obj = ""
         for line in file:
