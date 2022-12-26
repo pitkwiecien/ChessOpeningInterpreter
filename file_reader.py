@@ -1,4 +1,4 @@
-import options
+import options, auxiliary_functions
 
 
 def get_data(opening_str):
@@ -71,7 +71,7 @@ def read_object(obj, move_list, pop_first=True):
 
     inner_object_dict = dict()
     for elem in inner_object:
-        key, value = dictify(elem)
+        key, value = auxiliary_functions.dictify(elem)
         inner_object_dict[key] = value
 
     if pop_first:
@@ -86,20 +86,6 @@ def read_object(obj, move_list, pop_first=True):
         return read_object(element_retrieved, tuple(mutable_move_list))
 
 
-def dictify(string):
-    after = False
-    key = ""
-    value = ""
-    for character in string:
-        if after:
-            value += character
-        elif character == ":":
-            after = True
-        else:
-            key += character
-    return key, value
-
-
 def retrieve_move(obj):
     ret = ""
     for character in obj:
@@ -111,8 +97,8 @@ def retrieve_move(obj):
 
 def import_file(filename, from_file, previous_path=()):
     # print(f"filename: {filename}, for_white: {for_white}, from_file: {from_file}, previous_path: {previous_path}")
-    from_file = lower_first(from_file)
-    full_path = f"{options.openings_path}/{get_path(previous_path)}/{from_file}/{filename}.txt"
+    from_file = auxiliary_functions.lower_first(from_file)
+    full_path = f"{options.openings_path}/{auxiliary_functions.get_path(previous_path)}/{from_file}/{filename}.txt"
     new_history = list(previous_path)
     new_history.append(from_file)
     with open(full_path, "r") as file:
@@ -120,16 +106,3 @@ def import_file(filename, from_file, previous_path=()):
         for line in file:
             obj += format_line(line, filename, new_history)
         return obj
-
-
-def lower_first(string: str):
-    return string[0].lower() + string[1:]
-
-
-def get_path(from_path):
-    ret = ""
-    if type(from_path) is str:
-        return from_path + "/"
-    for elem in from_path:
-        ret += elem + "/"
-    return ret[:-1]
