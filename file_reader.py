@@ -46,7 +46,7 @@ def format_line(line, file_sender, file_history):
         elif character not in whitespaces and after_import_against is None:
             ret += character
     if after_import_against:
-        to_import = "Vs" + to_import
+        to_import = constants.OPENINGS_COUNTER_PREFIX + to_import
     if after_import_against is not None:
         ret += import_file(to_import, file_sender, file_history)
     if len(ret) == 0:

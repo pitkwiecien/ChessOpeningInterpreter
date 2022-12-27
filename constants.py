@@ -11,6 +11,7 @@ CLOSING_OBJECT_CHARACTER = "}"
 # opening files metadata
 OPENINGS_PATH = "./openings"
 OPENINGS_EXTENSION = "cl"
+OPENINGS_COUNTER_PREFIX = "Vs"
 PRIMARY_WHITE = "ForWhite"
 PRIMARY_BLACK = "ForBlack"
 
