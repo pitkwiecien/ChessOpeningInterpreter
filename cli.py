@@ -1,16 +1,15 @@
 import file_reader as reader
 import constants
-from auxiliary_functions import cls
+from auxiliary_functions import cls, safe_input
 
 
 def cli():
     cls()
     ending_text = f"\nThank you for using {constants.PROGRAM_NAME}!"
     print("Welcome to chess opening explorer!")
-    try:
-        current_moves = input(f"Enter moves played in desired game to start searching {constants.PROGRAM_NAME}: ").strip()
-    except KeyboardInterrupt:
-        print(ending_text)
+    current_moves = safe_input(f"Enter moves played in desired game to start searching {constants.PROGRAM_NAME}: ",
+                               ending_text)
+    if current_moves is None:
         return
     while True:
         cls()
@@ -26,11 +25,9 @@ def cli():
                 sep_len = len(constants.MOVE_SEPARATOR)
                 moves = constants.MOVE_HISTORY_BORDER + current_moves[:-sep_len] + constants.MOVE_HISTORY_BORDER
                 print(f'The moves so far are {moves}')
-            try:
-                current_moves += input("Enter next move played after the suggested one or click RETURN/ENTER to end "
-                                   "program: ").strip()
-            except KeyboardInterrupt:
-                print(ending_text)
+            current_moves += safe_input("Enter next move played after the suggested one or click RETURN/ENTER to end "
+                                        "program: ", ending_text)
+            if current_moves is None:
                 return
         else:
             if current_moves != "":
@@ -39,11 +36,9 @@ def cli():
             else:
                 print()
             print(f"Your best move in this position is {best_move}")
-            try:
-                new_move = input("Enter next move played after the suggested one or click RETURN/ENTER to end program: ")\
-                .strip()
-            except KeyboardInterrupt:
-                print(ending_text)
+            new_move = safe_input("Enter next move played after the suggested one or click RETURN/ENTER to end "
+                                  "program: ", ending_text)
+            if new_move is None:
                 return
             if new_move == "":
                 break
@@ -52,17 +47,14 @@ def cli():
 
     cls()
     print(ending_text)
-    try:
-        repeat = input("Do you want to repeat the program (Y/N): ").strip()
-    except KeyboardInterrupt:
-        print(ending_text)
+    repeat = safe_input("Do you want to repeat the program (Y/N): ", ending_text)
+    if repeat is None:
         return
     while repeat not in ("Y", "N", "y", "n"):
         cls()
-        try:
-            repeat = input("Please enter 'Y' if you wish to repeat the program or 'N' if you want to end it: ").strip()
-        except KeyboardInterrupt:
-            print(ending_text)
+        repeat = safe_input("Please enter 'Y' if you wish to repeat the program or 'N' if you want to end it: ",
+                            ending_text)
+        if repeat is None:
             return
     if repeat in ("Y", "y"):
         print()

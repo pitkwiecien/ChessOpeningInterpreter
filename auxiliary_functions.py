@@ -32,3 +32,12 @@ def dictify(string):
 def cls():
     command = 'cls' if system_name().lower().startswith('win') else 'clear'
     system_call([command])
+
+
+def safe_input(input_text, error_message):
+    ret = None
+    try:
+        ret = input(input_text).strip()
+    except KeyboardInterrupt:
+        print(error_message)
+    return ret
