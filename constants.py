@@ -14,3 +14,7 @@ PRIMARY_BLACK = "ForBlack"
 
 # function usage
 MOVE_SEPARATOR = " "
+
+# CLI
+MOVE_HISTORY_BORDER = "|"
+
