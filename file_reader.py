@@ -1,4 +1,5 @@
-import options, auxiliary_functions
+import constants
+import auxiliary_functions as aux
 
 
 def get_data(opening_str):
@@ -8,7 +9,7 @@ def get_data(opening_str):
 
     white = len(opening_list) % 2 == 0
     current_file = f"for{'White' if white else 'Black'}"
-    filename = f"{options.openings_path}/{current_file}.txt"
+    filename = f"{constants.OPENINGS_PATH}/{current_file}.txt"
 
     if opening_str == "":
         with open(filename, "r") as file:
@@ -32,15 +33,15 @@ def format_line(line, file_sender, file_history):
     to_import = ""
     whitespaces = (" ", "\n", "\t")
     for character in line:
-        if character == options.comment_character:
+        if character == constants.COMMENT_CHARACTER:
             break
 
         if after_import_against is not None and character not in whitespaces:
             to_import += character
 
-        if character == options.import_character:
+        if character == constants.IMPORT_CHARACTER:
             after_import_against = False
-        elif character == options.import_character_against:
+        elif character == constants.IMPORT_CHARACTER_AGAINST:
             after_import_against = True
         elif character not in whitespaces and after_import_against is None:
             ret += character
@@ -80,13 +81,16 @@ def read_object(obj, move_list, pop_first=True):
 
     inner_object_dict = dict()
     for elem in inner_object:
-        key, value = auxiliary_functions.dictify(elem)
+        key, value = aux.dictify(elem)
         inner_object_dict[key] = value
 
     if pop_first:
         mutable_move_list.pop(0)
 
-    element_retrieved = inner_object_dict[mutable_move_list[0]]
+    try:
+        element_retrieved = inner_object_dict[mutable_move_list[0]]
+    except KeyError:
+        return KeyError
 
     if len(mutable_move_list) < 2:
         return element_retrieved
@@ -97,6 +101,8 @@ def read_object(obj, move_list, pop_first=True):
 
 def retrieve_move(obj):
     ret = ""
+    if obj is KeyError:
+        return 1
     for character in obj:
         if character in ("{", "}"):
             break
@@ -105,9 +111,9 @@ def retrieve_move(obj):
 
 
 def import_file(filename, from_file, previous_path=()):
-    # print(f"filename: {filename}, for_white: {for_white}, from_file: {from_file}, previous_path: {previous_path}")
-    from_file = auxiliary_functions.lower_first(from_file)
-    full_path = f"{options.openings_path}/{auxiliary_functions.get_path(previous_path)}/{from_file}/{filename}.txt"
+    # print(f"filename: {filename}, from_file: {from_file}, previous_path: {previous_path}")
+    from_file = aux.lower_first(from_file)
+    full_path = f"{constants.OPENINGS_PATH}/{aux.get_path(previous_path)}/{from_file}/{filename}.txt"
     new_history = list(previous_path)
     new_history.append(from_file)
     with open(full_path, "r") as file:
