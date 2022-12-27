@@ -8,7 +8,7 @@ def get_data(opening_str):
         opening_list = []
 
     white = len(opening_list) % 2 == 0
-    current_file = f"for{'White' if white else 'Black'}"
+    current_file = constants.PRIMARY_WHITE if white else constants.PRIMARY_BLACK
     filename = f"{constants.OPENINGS_PATH}/{current_file}.{constants.OPENINGS_EXTENSION}"
 
     if opening_str == "":

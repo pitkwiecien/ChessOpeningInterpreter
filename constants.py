@@ -9,3 +9,7 @@ IMPORT_CHARACTER_AGAINST = "!"
 # paths
 OPENINGS_PATH = "./openings"
 OPENINGS_EXTENSION = "cl"
+
+# primary files
+PRIMARY_WHITE = "ForWhite"
+PRIMARY_BLACK = "ForBlack"
