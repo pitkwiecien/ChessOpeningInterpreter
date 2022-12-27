@@ -22,7 +22,7 @@ def get_data(opening_str):
         for line in file:
             obj += format_line(line, current_file, ())
         if not white:
-            obj = "{" + obj + "}"
+            obj = constants.OPENING_OBJECT_CHARACTER + obj + constants.CLOSING_OBJECT_CHARACTER
         return retrieve_move(read_object(obj, opening_list, True if white else False))
 
 
@@ -51,7 +51,7 @@ def format_line(line, file_sender, file_history):
         ret += import_file(to_import, file_sender, file_history)
     if len(ret) == 0:
         return ""
-    elif ret[-1] != "{":
+    elif ret[-1] != constants.OPENING_OBJECT_CHARACTER:
         ret += "|"
     # print(ret)
     return ret
@@ -60,7 +60,7 @@ def format_line(line, file_sender, file_history):
 def read_object(obj, move_list, pop_first=True):
     if obj[-1] == "|":
         obj = obj[:-1]
-    obj = obj.replace("|}", "}")
+    obj = obj.replace(f"|{constants.CLOSING_OBJECT_CHARACTER}", constants.CLOSING_OBJECT_CHARACTER)
 
     mutable_move_list = list(move_list)
 
@@ -68,13 +68,13 @@ def read_object(obj, move_list, pop_first=True):
     inner_object_str = ""
     parth_count = 0
     for character in obj:
-        if character == "}":
+        if character == constants.CLOSING_OBJECT_CHARACTER:
             parth_count -= 1
             if parth_count == 0:
                 break
         if after:
             inner_object_str += character
-        if character == "{":
+        if character == constants.OPENING_OBJECT_CHARACTER:
             after = True
             parth_count += 1
     inner_object = inner_object_str.split("|")
@@ -104,7 +104,7 @@ def retrieve_move(obj):
     if obj is KeyError:
         return 1
     for character in obj:
-        if character in ("{", "}"):
+        if character in (constants.OPENING_OBJECT_CHARACTER, constants.CLOSING_OBJECT_CHARACTER):
             break
         ret += character
     return ret
