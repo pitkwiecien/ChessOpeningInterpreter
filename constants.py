@@ -1,15 +1,16 @@
-# name
+# basic info
 PROGRAM_NAME = "The Chesser"
 
-# characters
+# character keywords
 COMMENT_CHARACTER = "/"
 IMPORT_CHARACTER = "@"
 IMPORT_CHARACTER_AGAINST = "!"
 
-# paths
+# opening files metadata
 OPENINGS_PATH = "./openings"
 OPENINGS_EXTENSION = "cl"
-
-# primary files
 PRIMARY_WHITE = "ForWhite"
 PRIMARY_BLACK = "ForBlack"
+
+# function usage
+MOVE_SEPARATOR = " "

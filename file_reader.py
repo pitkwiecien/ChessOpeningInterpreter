@@ -3,7 +3,7 @@ import auxiliary_functions as aux
 
 
 def get_data(opening_str):
-    opening_list = opening_str.split(" ")
+    opening_list = opening_str.split(constants.MOVE_SEPARATOR)
     if opening_str == "":
         opening_list = []
 

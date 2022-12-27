@@ -14,13 +14,13 @@ Enter moves played in desired game to start searching {constants.PROGRAM_NAME}: 
         cls()
         best_move = reader.get_data(current_moves)
         if best_move == 1:
-            list_old = current_moves.split(" ")
+            list_old = current_moves.split(constants.MOVE_SEPARATOR)
             list_old.pop()
-            current_moves = " ".join(list_old)
+            current_moves = constants.MOVE_SEPARATOR.join(list_old)
             if current_moves != "":
-                current_moves += " "
+                current_moves += constants.MOVE_SEPARATOR
             current_moves += input(f"""No such move exists in {constants.PROGRAM_NAME}!
-\n{f'The moves so far are |{current_moves}|' if current_moves != '' else ''}
+\n{f'The moves so far are |{current_moves[:-len(constants.MOVE_SEPARATOR)]}|' if current_moves != '' else ''}
 Enter next move played after the suggested one or click RETURN/ENTER to end program: """
                                    ).strip()
         else:
@@ -31,8 +31,8 @@ Enter next move played after the suggested one or click RETURN/ENTER to end prog
                              ).strip()
             if new_move == "":
                 break
-            current_moves += " " if current_moves != "" else ""
-            current_moves += best_move + " " + new_move
+            current_moves += constants.MOVE_SEPARATOR if current_moves != "" else ""
+            current_moves += best_move + constants.MOVE_SEPARATOR + new_move
 
     cls()
     repeat = input(
