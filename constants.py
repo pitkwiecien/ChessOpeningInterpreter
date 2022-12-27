@@ -8,3 +8,4 @@ IMPORT_CHARACTER_AGAINST = "!"
 
 # paths
 OPENINGS_PATH = "./openings"
+OPENINGS_EXTENSION = "txt"

@@ -9,7 +9,7 @@ def get_data(opening_str):
 
     white = len(opening_list) % 2 == 0
     current_file = f"for{'White' if white else 'Black'}"
-    filename = f"{constants.OPENINGS_PATH}/{current_file}.txt"
+    filename = f"{constants.OPENINGS_PATH}/{current_file}.{constants.OPENINGS_EXTENSION}"
 
     if opening_str == "":
         with open(filename, "r") as file:
@@ -113,7 +113,8 @@ def retrieve_move(obj):
 def import_file(filename, from_file, previous_path=()):
     # print(f"filename: {filename}, from_file: {from_file}, previous_path: {previous_path}")
     from_file = aux.lower_first(from_file)
-    full_path = f"{constants.OPENINGS_PATH}/{aux.get_path(previous_path)}/{from_file}/{filename}.txt"
+    path = f"{constants.OPENINGS_PATH}/{aux.get_path(previous_path)}"
+    full_path = f"{path}/{from_file}/{filename}.{constants.OPENINGS_EXTENSION}"
     new_history = list(previous_path)
     new_history.append(from_file)
     with open(full_path, "r") as file:
