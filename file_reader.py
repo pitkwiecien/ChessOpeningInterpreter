@@ -21,6 +21,8 @@ def get_data(opening_str):
         obj = ""
         for line in file:
             obj += format_line(line, current_file, ())
+        if not constants.CASE_SENSITIVE:
+            obj = obj.lower()
         if not white:
             obj = constants.OPENING_OBJECT_CHARACTER + obj + constants.CLOSING_OBJECT_CHARACTER
         return retrieve_move(read_object(obj, opening_list, True if white else False))

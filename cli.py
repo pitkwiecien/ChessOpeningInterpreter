@@ -25,10 +25,13 @@ def cli():
                 sep_len = len(constants.MOVE_SEPARATOR)
                 moves = constants.MOVE_HISTORY_BORDER + current_moves[:-sep_len] + constants.MOVE_HISTORY_BORDER
                 print(f'The moves so far are {moves}')
-            current_moves += safe_input("Enter next move played after the suggested one or click RETURN/ENTER to end "
+            new_move = safe_input("Enter next move played after the suggested one or click RETURN/ENTER to end "
                                         "program: ", ending_text)
-            if current_moves is None:
+            if new_move is None:
                 return
+            if new_move == "":
+                break
+            current_moves += new_move
         else:
             if current_moves != "":
                 moves = constants.MOVE_HISTORY_BORDER + current_moves + constants.MOVE_HISTORY_BORDER
@@ -44,6 +47,7 @@ def cli():
                 break
             current_moves += constants.MOVE_SEPARATOR if current_moves != "" else ""
             current_moves += best_move + constants.MOVE_SEPARATOR + new_move
+        print(f"|{current_moves}|")
 
     cls()
     print(ending_text)

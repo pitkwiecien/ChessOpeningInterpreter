@@ -1,6 +1,8 @@
 from platform import system as system_name
 from subprocess import  call as system_call
 
+import constants
+
 
 def get_path(from_path):
     ret = ""
@@ -38,6 +40,8 @@ def safe_input(input_text, error_message):
     ret = None
     try:
         ret = input(input_text).strip()
+        if not constants.CASE_SENSITIVE:
+            ret = ret.lower()
     except KeyboardInterrupt:
         print(error_message)
     return ret
