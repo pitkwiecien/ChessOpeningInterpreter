@@ -5,8 +5,13 @@ from auxiliary_functions import cls
 
 def cli():
     cls()
+    ending_text = f"\nThank you for using {constants.PROGRAM_NAME}!"
     print("Welcome to chess opening explorer!")
-    current_moves = input(f"Enter moves played in desired game to start searching {constants.PROGRAM_NAME}: ").strip()
+    try:
+        current_moves = input(f"Enter moves played in desired game to start searching {constants.PROGRAM_NAME}: ").strip()
+    except KeyboardInterrupt:
+        print(ending_text)
+        return
     while True:
         cls()
         best_move = reader.get_data(current_moves)
@@ -21,8 +26,12 @@ def cli():
                 sep_len = len(constants.MOVE_SEPARATOR)
                 moves = constants.MOVE_HISTORY_BORDER + current_moves[:-sep_len] + constants.MOVE_HISTORY_BORDER
                 print(f'The moves so far are {moves}')
-            current_moves += input("Enter next move played after the suggested one or click RETURN/ENTER to end "
+            try:
+                current_moves += input("Enter next move played after the suggested one or click RETURN/ENTER to end "
                                    "program: ").strip()
+            except KeyboardInterrupt:
+                print(ending_text)
+                return
         else:
             if current_moves != "":
                 moves = constants.MOVE_HISTORY_BORDER + current_moves + constants.MOVE_HISTORY_BORDER
@@ -30,19 +39,31 @@ def cli():
             else:
                 print()
             print(f"Your best move in this position is {best_move}")
-            new_move = input("Enter next move played after the suggested one or click RETURN/ENTER to end program: ")\
+            try:
+                new_move = input("Enter next move played after the suggested one or click RETURN/ENTER to end program: ")\
                 .strip()
+            except KeyboardInterrupt:
+                print(ending_text)
+                return
             if new_move == "":
                 break
             current_moves += constants.MOVE_SEPARATOR if current_moves != "" else ""
             current_moves += best_move + constants.MOVE_SEPARATOR + new_move
 
     cls()
-    print(f"\nThank you for using {constants.PROGRAM_NAME}!")
-    repeat = input("Do you want to repeat the program (Y/N): ").strip()
+    print(ending_text)
+    try:
+        repeat = input("Do you want to repeat the program (Y/N): ").strip()
+    except KeyboardInterrupt:
+        print(ending_text)
+        return
     while repeat not in ("Y", "N", "y", "n"):
         cls()
-        repeat = input("Please enter 'Y' if you wish to repeat the program or 'N' if you want to end it: ").strip()
+        try:
+            repeat = input("Please enter 'Y' if you wish to repeat the program or 'N' if you want to end it: ").strip()
+        except KeyboardInterrupt:
+            print(ending_text)
+            return
     if repeat in ("Y", "y"):
         print()
         cli()
